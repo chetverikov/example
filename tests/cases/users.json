@@ -1,0 +1,135 @@
+{
+  "cases": [
+    {
+      "name": "Should register user",
+      "autoAuth": true,
+      "request": {
+        "method": "post",
+        "path": "/users",
+        "data": {
+          "email": "foo2@bar.com",
+          "display_name": "Foo 2 Bar",
+          "password": "Woops"
+        }
+      },
+      "response": {
+        "code": 201
+      }
+    },
+    {
+      "name": "Should respond with 409 a status when user already exist",
+      "autoAuth": true,
+      "request": {
+        "method": "post",
+        "path": "/users",
+        "data": {
+          "email": "foo2@bar.com",
+          "display_name": "Foo 2 Bar",
+          "password": "Woops"
+        }
+      },
+      "response": {
+        "code": 409
+      }
+    },
+    {
+      "name": "Should respond with 400 a status when email is empty",
+      "autoAuth": true,
+      "request": {
+        "method": "post",
+        "path": "/users",
+        "data": {
+          "display_name": "Foo 2 Bar",
+          "password": "Woops"
+        }
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond with 400 a status when email is display_name",
+      "autoAuth": true,
+      "request": {
+        "method": "post",
+        "path": "/users",
+        "data": {
+          "email": "foo2@bar.com",
+          "password": "Woops"
+        }
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond with 400 a status when email is password",
+      "autoAuth": true,
+      "request": {
+        "method": "post",
+        "path": "/users",
+        "data": {
+          "email": "foo2@bar.com",
+          "display_name": "Foo 2 Bar"
+        }
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond with myself object",
+      "authType": "user",
+      "request": {
+        "method": "get",
+        "path": "/users/self"
+      },
+      "response": {
+        "code": 200
+      }
+    },
+    {
+      "name": "Should respond with myself object modified display_name",
+      "authType": "user",
+      "request": {
+        "method": "put",
+        "path": "/users/self",
+        "data": {
+          "display_name": "BAR BAR BAR"
+        }
+      },
+      "response": {
+        "code": 200,
+        "body": {
+          "result": {
+            "email": "foo@bar.com",
+            "display_name": "BAR BAR BAR",
+            "gender": "male"
+          }
+        }
+      }
+    },
+    {
+      "name": "Should respond 404",
+      "authType": "user",
+      "request": {
+        "method": "get",
+        "path": "/users/121221222222222222111111"
+      },
+      "response": {
+        "code": 404
+      }
+    },
+    {
+      "name": "Should respond 405",
+      "autoAuth": true,
+      "request": {
+        "method": "post",
+        "path": "/users/121221222222222222111111"
+      },
+      "response": {
+        "code": 405
+      }
+    }
+  ]
+}

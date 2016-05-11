@@ -1,0 +1,21 @@
+{
+  "User": [
+    {
+      "email": "anonymous@host.local",
+      "password": "",
+      "display_name": "Anonymous"
+    },
+    {
+      "email": "foo@bar.com",
+      "password": "foo",
+      "display_name": "Foo Bar"
+    }
+  ],
+  "Client": [
+    {
+      "_id" : "528f1ecfc567b6f5ce25ceed",
+      "name" : "example",
+      "secret" : "foo"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "port": 3000,
+  "security": {
+    "tokenLife": 3600,
+    "clientTokenLife": 31556926
+  },
+  "mongoose": {
+    "uri": "mongodb://localhost/test_example"
+  }
+}

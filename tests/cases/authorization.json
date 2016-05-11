@@ -1,0 +1,328 @@
+{
+  "cases": [
+    {
+      "name": "Should respond with a 200 status and client tokens",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "grant_type": "client_credentials"
+        }
+      },
+      "response": {
+        "code": 200,
+        "validTokensResponse": true
+      }
+    },
+    {
+      "name": "Should respond with a 200 status and user tokens",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "grant_type": "password",
+          "username": "foo@bar.com",
+          "password": "foo"
+        }
+      },
+      "response": {
+        "code": 200,
+        "validTokensResponse": true
+      }
+    },
+    {
+      "name": "Should respond with a 200 status and user tokens when email in upper case",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "grant_type": "password",
+          "username": "FOO@BAR.COM",
+          "password": "foo"
+        }
+      },
+      "response": {
+        "code": 200,
+        "validTokensResponse": true
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when a client is empty on grant type password",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "username": "foo@bar.com",
+          "password": "foo",
+          "grant_type": "password"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when a client is empty",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "grant_type": "client_credentials"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when client invalid",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "grant_type": "client_credentials",
+          "client_id": "bla bla bla",
+          "client_secret": "foo"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when client not found",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "grant_type": "client_credentials",
+          "client_id": "528f1ecfc00006f5ce25ceed",
+          "client_secret": "foo"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 400 status when a password is empty",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "username": "foo@bar.com",
+          "grant_type": "password"
+        }
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond with a 400 status when a username is empty",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "password": "foo",
+          "grant_type": "password"
+        }
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid user credentials - email",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "username": "foo",
+          "password": "foo",
+          "grant_type": "password"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid user credentials - password",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "username": "foo@bar.com",
+          "password": "fo",
+          "grant_type": "password"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid client credentials",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "111",
+          "username": "foo@bar.com",
+          "password": "foo",
+          "grant_type": "password"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid user token",
+      "request": {
+        "method": "get",
+        "path": "/users/self",
+        "headers": {
+          "Authorization": "Bearer null"
+        },
+        "data": {}
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when user token not found",
+      "request": {
+        "method": "get",
+        "path": "/users/self",
+        "headers": {
+          "Authorization": "Bearer 528f10000567b6f5ce25ceed"
+        },
+        "data": {}
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when user token not found",
+      "request": {
+        "method": "get",
+        "path": "/comments",
+        "headers": {
+          "Authorization": "Bearer 528f10000567b6f5ce25ceed"
+        },
+        "data": {}
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid client token",
+      "request": {
+        "method": "get",
+        "path": "/comments",
+        "headers": {
+          "Authorization": "Bearer null"
+        },
+        "data": {}
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid refresh token",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "grant_type": "refresh_token",
+          "refresh_token": "bla bla bla"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when refresh token not found",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "grant_type": "refresh_token",
+          "refresh_token": "528f1ecfc567b6f5ce25ceed"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 401 status when invalid token not found",
+      "request": {
+        "method": "post",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {
+          "client_id": "528f1ecfc567b6f5ce25ceed",
+          "client_secret": "foo",
+          "grant_type": "refresh_token",
+          "refresh_token": "528f1ecfc567b6f5ce25ceed"
+        }
+      },
+      "response": {
+        "code": 401
+      }
+    },
+    {
+      "name": "Should respond with a 405 status",
+      "request": {
+        "method": "get",
+        "path": "/oauth/token",
+        "headers": {},
+        "data": {}
+      },
+      "response": {
+        "code": 405
+      }
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "cases": [
+    {
+      "name": "Should respond with validation error",
+      "authType": "user",
+      "request": {
+        "method": "post",
+        "path": "/comments",
+        "data": {}
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond with a status 200 list of comments",
+      "authType": "user",
+      "request": {
+        "method": "get",
+        "path": "/comments",
+        "data": {}
+      },
+      "response": {
+        "code": 200
+      }
+    },
+    {
+      "name": "Should respond new comments",
+      "authType": "user",
+      "request": {
+        "method": "post",
+        "path": "/comments",
+        "data": {
+          "text": "Foo",
+          "item": "000000000000000000000006"
+        }
+      },
+      "response": {
+        "code": 201,
+        "body": {
+          "result": {
+            "text": "Foo",
+            "item": "000000000000000000000006",
+            "path": "",
+            "status": "moderate"
+          }
+        }
+      }
+    },
+    {
+      "name": "Should respond new comments with parent",
+      "authType": "user",
+      "request": {
+        "method": "post",
+        "path": "/comments",
+        "data": {
+          "text": "Foo",
+          "item": "000000000000000000000003",
+          "parent": "111111111111111111111116"
+        }
+      },
+      "response": {
+        "code": 201,
+        "body": {
+          "result": {
+            "text": "Foo",
+            "item": "000000000000000000000003",
+            "path": "111111111111111111111116",
+            "status": "moderate",
+            "parent": "111111111111111111111116"
+          }
+        }
+      }
+    },
+    {
+      "name": "Should respond updated comment",
+      "authType": "user",
+      "request": {
+        "method": "put",
+        "path": "/comments/111111111111111111111111",
+        "data": {
+          "text": "Foo BAR"
+        }
+      },
+      "response": {
+        "code": 200,
+        "body": {
+          "result": {
+            "text": "Foo BAR",
+            "item": "000000000000000000000001",
+            "path": "",
+            "status": "moderate"
+          }
+        }
+      }
+    },
+    {
+      "name": "Should respond 400 when parent not found",
+      "authType": "user",
+      "request": {
+        "method": "put",
+        "path": "/comments/111111111111111111111111",
+        "data": {
+          "parent": "112221111111111111111111"
+        }
+      },
+      "response": {
+        "code": 400
+      }
+    },
+    {
+      "name": "Should respond 200 when delete comment",
+      "authType": "user",
+      "request": {
+        "method": "delete",
+        "path": "/comments/111111111111111111111111"
+      },
+      "response": {
+        "code": 200
+      }
+    },
+    {
+      "name": "Should respond 404",
+      "authType": "user",
+      "request": {
+        "method": "get",
+        "path": "/comments/121221222222222222111111"
+      },
+      "response": {
+        "code": 404
+      }
+    },
+    {
+      "name": "Should respond 404 when update",
+      "authType": "user",
+      "request": {
+        "method": "put",
+        "path": "/comments/121221222222222222111111"
+      },
+      "response": {
+        "code": 404
+      }
+    },
+    {
+      "name": "Should respond 404 depth",
+      "authType": "user",
+      "request": {
+        "method": "get",
+        "path": "/comments/121221222222222222111111/depth"
+      },
+      "response": {
+        "code": 404
+      }
+    },
+    {
+      "name": "Should respond 405",
+      "authType": "user",
+      "request": {
+        "method": "post",
+        "path": "/comments/121221222222222222111111"
+      },
+      "response": {
+        "code": 405
+      }
+    }
+  ]
+}
